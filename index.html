@@ -5,24 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Puspita Kaban — Geospatial Data Scientist</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lato:wght@300;400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- Leaflet -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=Source+Sans+3:wght@300;400;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
-  <!-- Site styles -->
   <link rel="stylesheet" href="assets/style.css">
+
+  <style>
+    .profile-block,
+    .sidebar-section { border-bottom: none; }
+    .profile-block   { padding-bottom: 8px; }
+    .sidebar-section { padding-top: 8px; padding-bottom: 8px; }
+  </style>
 </head>
 <body>
-  <!-- ── LAYOUT ── -->
+
   <div class="layout">
 
-    <!-- ── SIDEBAR ── -->
     <aside class="sidebar">
 
-      <!-- Profile -->
       <div class="profile-block">
         <div class="profile-name">Puspita<br><em>Kaban</em></div>
         <div class="profile-role">Geospatial Data Scientist</div>
@@ -34,7 +35,6 @@
         </p>
       </div>
 
-      <!-- Expertise tags -->
       <div class="sidebar-section">
         <div class="sidebar-section-label">Expertise</div>
         <div class="tag-list">
@@ -49,21 +49,26 @@
         </div>
       </div>
 
-      <!-- Links -->
       <div class="sidebar-section">
         <div class="sidebar-section-label">Links</div>
         <nav class="link-list">
 
           <a class="link-item" href="https://github.com/" target="_blank" rel="noopener">
-            <!-- GitHub icon -->
             <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
             </svg>
             GitHub
           </a>
 
+          <a class="link-item" href="https://linkedin.com/in/" target="_blank" rel="noopener">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="0"/>
+              <path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/>
+            </svg>
+            LinkedIn
+          </a>
+
           <a class="link-item" href="https://scholar.google.com/" target="_blank" rel="noopener">
-            <!-- Scholar icon (mortarboard) -->
             <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
@@ -72,7 +77,6 @@
           </a>
 
           <a class="link-item" href="assets/cv.pdf" target="_blank" rel="noopener">
-            <!-- Document icon -->
             <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
@@ -86,14 +90,10 @@
         </nav>
       </div>
 
-      <!-- CTA -->
-      <a class="cta-email" href="mailto:your@email.com">
-        ✉ Get in Touch
-      </a>
+      <a class="cta-email" href="mailto:your@email.com">✉ Get in Touch</a>
 
     </aside>
 
-    <!-- ── MAP ── -->
     <main class="map-area">
       <div id="map"></div>
       <svg id="connector-svg"></svg>
@@ -102,7 +102,6 @@
 
   </div>
 
-  <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="projects/data.js"></script>
   <script src="assets/map.js"></script>

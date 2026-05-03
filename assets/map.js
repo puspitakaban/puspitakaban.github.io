@@ -1,211 +1,223 @@
-// assets/map.js
-// Map init · pin placement · card rendering · SVG connectors · float animation
-
+// assets/map.js — v6
 (function () {
 
-  // ── MAP ────────────────────────────────────────────────────────────────
-  const WORLD_BOUNDS = L.latLngBounds(L.latLng(-85, -180), L.latLng(85, 180));
+  // ── MAP ───────────────────────────────────────────────────────────────────
+  const HORIZ_BOUNDS = L.latLngBounds(L.latLng(-89, -180), L.latLng(89, 180));
 
   const map = L.map('map', {
     zoomControl:        false,
     attributionControl: true,
-    center:             [18, 10],
-    zoom:               3,
+    center:             [20, 0],
+    zoom:               2,
     minZoom:            2,
     maxZoom:            6,
-    maxBounds:          WORLD_BOUNDS,
-    maxBoundsViscosity: 1.0,
+    maxBounds:          HORIZ_BOUNDS,
+    maxBoundsViscosity: 0.6,
     worldCopyJump:      false
   });
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors © CARTO',
-    subdomains:  'abcd',
-    maxZoom:     19
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+    minZoom:     0,
+    maxZoom:     16,
+    attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC'
   }).addTo(map);
 
   L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-  // ── PIN ICON ───────────────────────────────────────────────────────────
-  function makePin() {
-    return L.divIcon({
-      className:  '',
-      html:       '<div class="pin-dot"></div>',
-      iconSize:   [10, 10],
-      iconAnchor: [5, 5]
-    });
-  }
+  // ── PIN LAYER ─────────────────────────────────────────────────────────────
+  const pinLayer = L.layerGroup().addTo(map);
 
-  const pins = {};
-  Object.entries(LOCATIONS).forEach(([key, ll]) => {
-    pins[key] = L.marker([ll.lat, ll.lng], { icon: makePin(), interactive: false }).addTo(map);
-  });
-
-  // ── ELEMENTS ───────────────────────────────────────────────────────────
+  // ── DOM ───────────────────────────────────────────────────────────────────
   const cardsEl = document.getElementById('cards-overlay');
   const svgEl   = document.getElementById('connector-svg');
+  const mapArea = document.querySelector('.map-area');
 
-  // ── STATE ──────────────────────────────────────────────────────────────
-  const floatState = []; // per-card float params
-  let   floatRAF   = null;
-  const cardMeta   = []; // { el, baseCx, baseCy, pinX, pinY, lines[] }
+  const tooltip = document.createElement('div');
+  tooltip.className   = 'card-tooltip';
+  tooltip.textContent = 'Click to see project';
+  document.body.appendChild(tooltip);
 
-  // ── RENDER ────────────────────────────────────────────────────────────
-  function render() {
-    if (floatRAF) { cancelAnimationFrame(floatRAF); floatRAF = null; }
-    cardsEl.innerHTML = '';
-    svgEl.innerHTML   = '';
-    cardMeta.length   = 0;
+  // ── CONSTANTS ─────────────────────────────────────────────────────────────
+  const CARD_W   = 185;
+  const PIN_DIST = 55;
+  const MARGIN   = 8;
 
-    const byLoc = {};
-    PROJECTS.forEach(p => {
-      if (!byLoc[p.location]) byLoc[p.location] = [];
-      byLoc[p.location].push(p);
+  // ── STATE ─────────────────────────────────────────────────────────────────
+  let floatRAF    = null;
+  let cardMeta    = [];
+  let renderTimer = null;   // debounce handle
+
+  // ── DEBOUNCED RENDER ──────────────────────────────────────────────────────
+  // Any number of rapid events (moveend, zoomend, setView, resize) collapse
+  // into a single render call 120ms after the last one fires.
+  function scheduleRender() {
+    clearTimeout(renderTimer);
+    renderTimer = setTimeout(render, 120);
+  }
+
+  // ── HELPERS ───────────────────────────────────────────────────────────────
+  function groupByPin(projects) {
+    const groups = [];
+    const index  = {};
+    projects.forEach(p => {
+      const loc = LOCATIONS[p.location];
+      if (!loc) { console.warn('Unknown location key:', p.location); return; }
+      if (!index[p.location]) {
+        index[p.location] = { lat: loc.lat, lng: loc.lng, label: loc.label, projects: [] };
+        groups.push(index[p.location]);
+      }
+      index[p.location].projects.push(p);
     });
+    return groups;
+  }
 
-    let cardIdx = 0;
+  function placeCards(pinX, pinY, cardHeights) {
+    const n          = cardHeights.length;
+    const startAngle = n === 1 ? 315 : 300;
+    const spread     = n === 1 ? 0   : (n === 2 ? 90 : 300);
+    const step       = n <= 1  ? 0   : spread / (n - 1);
+    const mw         = mapArea.offsetWidth;
+    const mh         = mapArea.offsetHeight;
 
-    Object.entries(byLoc).forEach(([locKey, projects]) => {
-      const ll      = LOCATIONS[locKey];
-      const pin     = map.latLngToContainerPoint([ll.lat, ll.lng]);
-      const offsets = CARD_OFFSETS[locKey] || [];
-      const multi   = projects.length > 1;
-      const groupMetas = [];
-
-      projects.forEach((proj, i) => {
-        const off = offsets[i] || { dx: 0, dy: -220 };
-        const cx  = pin.x + off.dx;
-        const cy  = pin.y + off.dy;
-
-        const card = document.createElement('div');
-        card.className  = 'card';
-        card.style.left = cx + 'px';
-        card.style.top  = cy + 'px';
-        card.innerHTML  = `
-          <div class="card-loc">${ll.label}</div>
-          <div class="card-eyebrow ${proj.eyebrowClass || ''}">${proj.eyebrow}</div>
-          <div class="card-title">${proj.title}</div>
-          <div class="card-body">${proj.body}</div>
-          <div class="card-chips">
-            ${proj.chips.map(ch => `<span class="chip ${proj.chipClass || ''}">${ch}</span>`).join('')}
-          </div>`;
-        cardsEl.appendChild(card);
-
-        // Seed float params once per card slot
-        if (!floatState[cardIdx]) {
-          floatState[cardIdx] = {
-            phase: Math.random() * Math.PI * 2,
-            speed: 0.00035 + Math.random() * 0.00025,
-            ampX:  2.5 + Math.random() * 2.5,
-            ampY:  3.5 + Math.random() * 3.5
-          };
-        }
-
-        const meta = { el: card, baseCx: cx, baseCy: cy, pinX: pin.x, pinY: pin.y, lines: [] };
-        cardMeta.push(meta);
-        groupMetas.push(meta);
-        cardIdx++;
-      });
-
-      // Draw lines after DOM paints (need offsetHeight)
-      requestAnimationFrame(() => {
-        if (multi) {
-          // Each card has a vertical drop to a shared horizontal bar,
-          // then one stem from bar midpoint down to the pin.
-          const bottoms = groupMetas.map(m => ({
-            x: m.baseCx + 114,
-            y: m.baseCy + m.el.offsetHeight
-          }));
-          const barY  = Math.max(...bottoms.map(b => b.y)) + 12;
-          const barX1 = Math.min(...bottoms.map(b => b.x));
-          const barX2 = Math.max(...bottoms.map(b => b.x));
-          const midX  = (barX1 + barX2) / 2;
-
-          // Drop lines (card → bar), one per card
-          groupMetas.forEach((m, j) => {
-            const drop = makeLine(bottoms[j].x, bottoms[j].y, bottoms[j].x, barY);
-            svgEl.appendChild(drop);
-            m.lines.push({ el: drop, type: 'drop', baseX: bottoms[j].x, baseBotY: bottoms[j].y, barY });
-          });
-
-          // Horizontal bar
-          const bar = makeLine(barX1, barY, barX2, barY);
-          svgEl.appendChild(bar);
-          groupMetas[0].lines.push({ el: bar, type: 'bar', barX1, barX2, barY });
-
-          // Stem: bar midpoint → pin
-          const stem = makeLine(midX, barY, pin.x, pin.y);
-          svgEl.appendChild(stem);
-          groupMetas[0].lines.push({ el: stem, type: 'stem', midX, barY, pinX: pin.x, pinY: pin.y });
-
-        } else {
-          const m  = groupMetas[0];
-          const h  = m.el.offsetHeight;
-          const cx2 = m.baseCx + 114;
-          const by  = m.baseCy + h;
-          const ln  = makeLine(cx2, by, m.pinX, m.pinY);
-          svgEl.appendChild(ln);
-          m.lines.push({ el: ln, type: 'single' });
-        }
-
-        startFloat();
-      });
+    return cardHeights.map((cardH, i) => {
+      const rad  = ((startAngle + i * step) * Math.PI) / 180;
+      const dist = PIN_DIST + Math.max(CARD_W, cardH) * 0.55;
+      const cx   = Math.max(MARGIN, Math.min(pinX + Math.cos(rad) * dist - CARD_W / 2, mw - CARD_W - MARGIN));
+      const cy   = Math.max(MARGIN, Math.min(pinY + Math.sin(rad) * dist - cardH  / 2, mh - cardH  - MARGIN));
+      return { cx, cy };
     });
   }
 
-  // ── LINE FACTORY ───────────────────────────────────────────────────────
+  function sideMidpoint(cx, cy, cardH, pinX, pinY) {
+    const midY  = cy + cardH / 2;
+    const left  = { x: cx,          y: midY, rx: 0,      ry: cardH / 2 };
+    const right = { x: cx + CARD_W, y: midY, rx: CARD_W, ry: cardH / 2 };
+    return Math.hypot(left.x - pinX, left.y - pinY) <
+           Math.hypot(right.x - pinX, right.y - pinY) ? left : right;
+  }
+
   function makeLine(x1, y1, x2, y2) {
     const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     l.setAttribute('x1', x1); l.setAttribute('y1', y1);
     l.setAttribute('x2', x2); l.setAttribute('y2', y2);
-    l.setAttribute('stroke', '#1a5c44');
-    l.setAttribute('stroke-width', '1');
-    l.setAttribute('opacity', '0.55');
+    l.setAttribute('stroke', '#ffffff');
+    l.setAttribute('stroke-width', '0.85');
+    l.setAttribute('opacity', '0.85');
     return l;
   }
 
-  // ── FLOAT ANIMATION ───────────────────────────────────────────────────
+  // ── RENDER ────────────────────────────────────────────────────────────────
+  function render() {
+    // Stop float loop and wipe all previous output
+    if (floatRAF) { cancelAnimationFrame(floatRAF); floatRAF = null; }
+    cardsEl.innerHTML = '';
+    svgEl.innerHTML   = '';
+    cardMeta          = [];
+    pinLayer.clearLayers();
+
+    const groups     = groupByPin(PROJECTS);
+    let   doneGroups = 0;
+
+    groups.forEach(group => {
+      const pin = map.latLngToContainerPoint([group.lat, group.lng]);
+
+      L.marker([group.lat, group.lng], {
+        icon: L.divIcon({ className: '', html: '<div class="pin-dot"></div>', iconSize: [10,10], iconAnchor: [5,5] }),
+        interactive: false
+      }).addTo(pinLayer);
+
+      const cardEls = group.projects.map((proj) => {
+        const card     = document.createElement('div');
+        card.className = 'card';
+        card.style.cssText = `width:${CARD_W}px; left:-9999px; top:0px;`;
+
+        const hasLink = proj.link || proj.page;
+        if (hasLink) card.classList.add('card--clickable');
+
+        card.innerHTML = `
+          <div class="card-loc">${group.label} · ${proj.year}</div>
+          <div class="card-title">${proj.title}</div>
+          <div class="card-body">${proj.body}</div>
+          <div class="card-chips">${proj.chips.map(ch => `<span class="chip">${ch}</span>`).join('')}</div>`;
+
+        if (proj.link)      card.addEventListener('click', () => window.open(proj.link, '_blank'));
+        else if (proj.page) card.addEventListener('click', () => window.open('projects/' + proj.page, '_blank'));
+
+        const tipText = hasLink ? 'Click to see project' : 'No link yet';
+        card.addEventListener('mouseenter', ()  => { tooltip.textContent = tipText; tooltip.style.display = 'block'; });
+        card.addEventListener('mousemove',  e   => { tooltip.style.left = (e.clientX + 14) + 'px'; tooltip.style.top = (e.clientY - 32) + 'px'; });
+        card.addEventListener('mouseleave', ()  => { tooltip.style.display = 'none'; });
+
+        cardsEl.appendChild(card);
+        return card;
+      });
+
+      requestAnimationFrame(() => {
+        const heights   = cardEls.map(el => el.offsetHeight);
+        const positions = placeCards(pin.x, pin.y, heights);
+
+        cardEls.forEach((card, i) => {
+          const { cx, cy } = positions[i];
+          const cardH      = heights[i];
+
+          card.style.left = cx + 'px';
+          card.style.top  = cy + 'px';
+
+          const side = sideMidpoint(cx, cy, cardH, pin.x, pin.y);
+          const line = makeLine(side.x, side.y, pin.x, pin.y);
+          svgEl.appendChild(line);
+
+          cardMeta.push({
+            el:         card,
+            baseCx:     cx,
+            baseCy:     cy,
+            cardH,
+            pinX:       pin.x,
+            pinY:       pin.y,
+            lineEl:     line,
+            sideOffset: { rx: side.rx, ry: side.ry },
+            float: {
+              phaseX: Math.random() * Math.PI * 2,
+              phaseY: Math.random() * Math.PI * 2,
+              speedX: 0.00045 + Math.random() * 0.00025,
+              speedY: 0.00035 + Math.random() * 0.00020,
+              ampX:   5 + Math.random() * 4,
+              ampY:   6 + Math.random() * 5
+            }
+          });
+        });
+
+        doneGroups++;
+        if (doneGroups === groups.length) startFloat();
+      });
+    });
+  }
+
+  // ── FLOAT ─────────────────────────────────────────────────────────────────
   function startFloat() {
     let prev = performance.now();
+    const mw = mapArea.offsetWidth;
+    const mh = mapArea.offsetHeight;
 
     function tick(now) {
-      const dt = now - prev;
+      const dt = Math.min(now - prev, 50);
       prev = now;
 
-      cardMeta.forEach((m, i) => {
-        const fs = floatState[i];
-        if (!fs) return;
-        fs.phase += fs.speed * dt;
+      cardMeta.forEach(m => {
+        const f = m.float;
+        f.phaseX += f.speedX * dt;
+        f.phaseY += f.speedY * dt;
 
-        const ox = Math.sin(fs.phase)               * fs.ampX;
-        const oy = Math.sin(fs.phase * 0.65 + 1.3)  * fs.ampY;
-
-        const cx = m.baseCx + ox;
-        const cy = m.baseCy + oy;
+        const cx = Math.max(MARGIN, Math.min(m.baseCx + Math.sin(f.phaseX) * f.ampX, mw - CARD_W - MARGIN));
+        const cy = Math.max(MARGIN, Math.min(m.baseCy + Math.sin(f.phaseY) * f.ampY, mh - m.cardH - MARGIN));
 
         m.el.style.left = cx + 'px';
         m.el.style.top  = cy + 'px';
 
-        // Recompute line endpoints that move with this card
-        const h      = m.el.offsetHeight;
-        const cardCX = cx + 114;
-        const cardBY = cy + h;
-
-        m.lines.forEach(ld => {
-          if (ld.type === 'single') {
-            ld.el.setAttribute('x1', cardCX);
-            ld.el.setAttribute('y1', cardBY);
-            // x2/y2 (pin) are static
-          }
-          if (ld.type === 'drop') {
-            // x stays at card centre; top follows card, bottom is fixed barY
-            ld.el.setAttribute('x1', cardCX);
-            ld.el.setAttribute('y1', cardBY);
-            ld.el.setAttribute('x2', cardCX);
-            ld.el.setAttribute('y2', ld.barY);
-          }
-          // 'bar' and 'stem' are static reference lines — left at base coords
-        });
+        if (m.lineEl) {
+          m.lineEl.setAttribute('x1', cx + m.sideOffset.rx);
+          m.lineEl.setAttribute('y1', cy + m.sideOffset.ry);
+        }
       });
 
       floatRAF = requestAnimationFrame(tick);
@@ -214,9 +226,21 @@
     floatRAF = requestAnimationFrame(tick);
   }
 
-  // ── EVENTS ────────────────────────────────────────────────────────────
-  map.on('moveend zoomend', render);
-  map.whenReady(() => setTimeout(render, 80));
-  window.addEventListener('resize', () => { map.invalidateSize(); render(); });
+  // ── EVENTS ────────────────────────────────────────────────────────────────
+  // All events go through scheduleRender — rapid-fire events debounce into one
+  map.on('moveend zoomend', scheduleRender);
+
+  map.whenReady(() => {
+    const fitZoom = Math.log2(map.getSize().x / 256);
+    map.setView([20, 0], fitZoom, { animate: false });
+    // setView fires moveend which scheduleRender handles — no extra call needed
+  });
+
+  window.addEventListener('resize', () => {
+    map.invalidateSize();
+    const fitZoom = Math.log2(map.getSize().x / 256);
+    if (map.getZoom() < fitZoom) map.setZoom(fitZoom, { animate: false });
+    scheduleRender();
+  });
 
 })();

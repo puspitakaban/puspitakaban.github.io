@@ -1,53 +1,54 @@
-// projects/data.js
-// Edit this file to add, remove, or update portfolio cards.
+// ── LOCATIONS ────────────────────────────────────────────────────────────────
+// Add a new city here, then reference its key in PROJECTS.
+
+const LOCATIONS = {
+  'ann-arbor': {
+    label: 'Ann Arbor, MI',
+    lat:    42.2808,
+    lng:   -83.7430
+  },
+  'jakarta': {
+    label: 'Jakarta, Indonesia',
+    lat:   -6.2088,
+    lng:   106.8456
+  }
+};
+
+// ── PROJECTS ──────────────────────────────────────────────────────────────────
+// location: key from LOCATIONS above
+// link:     external URL (opens in new tab)
+// page:     filename inside /projects/ folder (e.g. 'my-project.html')
+// Leave link and page empty for a non-clickable card.
 
 const PROJECTS = [
   {
-    id: 'spatial-access',
-    location: 'annArbor',
-    eyebrow: 'MS Thesis · UMich 2024',
-    eyebrowClass: 'blue',
-    title: 'Spatial Accessibility Modeling of Health Services in Michigan',
-    body: 'Applied the enhanced 2-step floating catchment area (E2SFCA) method to quantify physician accessibility across Michigan counties using road-network travel time.',
-    chips: ['R · sf', 'Census API', 'E2SFCA', 'Network Analysis'],
-    chipClass: 'blue'
+    id:       'spatial-access',
+    location: 'ann-arbor',
+    year:     '2024',
+    title:    'Spatial Accessibility Modeling of Health Services in Michigan',
+    body:     'Enhanced 2SFCA method to quantify physician accessibility across Michigan counties using road-network travel time.',
+    chips:    ['R · sf', 'Census API', 'E2SFCA', 'Network Analysis'],
+    link:     '',
+    page:     ''
   },
   {
-    id: 'bayesian-edu',
-    location: 'annArbor',
-    eyebrow: 'Coursework Research · UMich 2023',
-    eyebrowClass: 'blue',
-    title: 'Bayesian Spatial Regression of Educational Attainment',
-    body: 'Fitted a Besag–York–Mollié (BYM2) model to explore spatial autocorrelation in high-school graduation rates across Midwest counties.',
-    chips: ['R · Stan', 'INLA', 'BYM2 Model', 'ACS Data'],
-    chipClass: 'blue'
+    id:       'bayesian-edu',
+    location: 'ann-arbor',
+    year:     '2023',
+    title:    'Bayesian Spatial Regression of Educational Attainment',
+    body:     'BYM2 model exploring spatial autocorrelation in high-school graduation rates across Midwest counties.',
+    chips:    ['R · Stan', 'INLA', 'BYM2 Model', 'ACS Data'],
+    link:     '',
+    page:     ''
   },
   {
-    id: 'stunting-me',
+    id:       'stunting-me',
     location: 'jakarta',
-    eyebrow: 'M&E Research · Indonesia 2022',
-    eyebrowClass: '',
-    title: 'Stunting Reduction Program — National Monitoring Framework',
-    body: 'Designed the results-based M&E framework and geospatial dashboard for a multi-province nutrition program targeting under-5 stunting across Java and Nusa Tenggara.',
-    chips: ['QGIS · Python', 'Bayesian Hierarchical', 'ODK Collect', 'Power BI'],
-    chipClass: ''
+    year:     '2022',
+    title:    'Stunting Reduction Program — National M&E Framework',
+    body:     'Results-based M&E framework and geospatial dashboard for a multi-province nutrition program across Java and Nusa Tenggara.',
+    chips:    ['QGIS · Python', 'Bayesian Hierarchical', 'ODK Collect', 'Power BI'],
+    link:     '',
+    page:     ''
   }
 ];
-
-// Geographic centres of each location key
-const LOCATIONS = {
-  annArbor: { lat: 42.2808, lng: -83.7430, label: 'Ann Arbor, MI' },
-  jakarta:  { lat: -6.2088, lng: 106.8456, label: 'Jakarta, Indonesia' }
-};
-
-// Card offsets from pin (px). Two cards side-by-side above Ann Arbor;
-// one card above Jakarta.
-const CARD_OFFSETS = {
-  annArbor: [
-    { dx: -245, dy: -220 },
-    { dx:   15, dy: -220 }
-  ],
-  jakarta: [
-    { dx: -114, dy: -210 }
-  ]
-};

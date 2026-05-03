@@ -3,20 +3,20 @@
 
 /* ── TOKENS ── */
 :root {
-  --bg:         #f0ece4;
-  --surface:    #e8e4dc;
-  --border:     rgba(0,0,0,0.13);
-  --border-dark:rgba(0,0,0,0.22);
-  --text-1:     #111111;
-  --text-2:     #444444;
+  --bg:         #ffffff;
+  --surface:    #f4f4f2;
+  --border:     rgba(0,0,0,0.10);
+  --border-dark:rgba(0,0,0,0.20);
+  --text-1:     #0f0f0f;
+  --text-2:     #404040;
   --text-3:     #888888;
-  --green:      #1a5c44;
-  --green-dim:  rgba(26,92,68,0.10);
+  --green:      #2d5a1b;
+  --green-dim:  rgba(45,90,27,0.10);
   --blue:       #1a3f6e;
   --sidebar-w:  280px;
   --nav-h:      52px;
-  --font-serif: 'DM Serif Display', serif;
-  --font-sans:  'Lato', sans-serif;
+  --font-serif: 'Crimson Pro', serif;
+  --font-sans:  'Source Sans 3', sans-serif;
   --font-mono:  'DM Mono', monospace;
 }
 
@@ -83,15 +83,15 @@ body {
 .layout {
   display: flex;
   height: 100vh;
-  padding-top: var(--nav-h);
+  overflow: hidden;
 }
 
 /* ── SIDEBAR ── */
 .sidebar {
   width: var(--sidebar-w);
   flex-shrink: 0;
-  height: calc(100vh - var(--nav-h));
-  background: var(--bg);
+  height: 100vh;
+  background: #e8eae1;
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -126,8 +126,9 @@ body {
 
 .profile-name {
   font-family: var(--font-serif);
-  font-size: 19px;
-  line-height: 1.15;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.1;
   margin-bottom: 3px;
 }
 
@@ -146,8 +147,8 @@ body {
 }
 
 .profile-bio {
-  font-size: 11.5px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.65;
   color: var(--text-2);
 }
 
@@ -249,7 +250,8 @@ body {
 .map-area {
   flex: 1;
   position: relative;
-  height: calc(100vh - var(--nav-h));
+  height: 100vh;
+  min-width: 0;
 }
 
 #map {
@@ -258,7 +260,7 @@ body {
 }
 
 .leaflet-tile-pane {
-  filter: saturate(0.4) contrast(1.1) brightness(1.04);
+  filter: none;
 }
 
 /* ── CONNECTOR SVG ── */
@@ -282,19 +284,26 @@ body {
 .card {
   position: absolute;
   pointer-events: all;
-  width: 228px;
   background: var(--bg);
   border: 1px solid var(--border-dark);
-  padding: 16px 18px;
-  /* SHARP — no border-radius */
-  box-shadow: 3px 3px 0px rgba(0,0,0,0.07);
-  will-change: left, top;     /* hint GPU for smooth float */
+  padding: 13px 15px;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.06);
+  will-change: left, top;
   animation: cardFadeIn 0.5s ease both;
+  user-select: none;
 }
 
 .card:hover {
-  box-shadow: 5px 5px 0px rgba(0,0,0,0.13);
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.11);
   z-index: 10;
+}
+
+.card--clickable {
+  cursor: pointer;
+}
+
+.card--clickable:hover {
+  border-color: var(--green);
 }
 
 @keyframes cardFadeIn {
@@ -306,14 +315,31 @@ body {
 .card:nth-child(2) { animation-delay: 0.18s; }
 .card:nth-child(3) { animation-delay: 0.32s; }
 
+/* ── TOOLTIP ── */
+.card-tooltip {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--text-1);
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
 .card-loc {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 500;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 9px;
+  margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -324,62 +350,59 @@ body {
   width: 5px; height: 5px;
   background: var(--green);
   flex-shrink: 0;
-  /* sharp square dot */
 }
-
-.card-eyebrow {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 6px;
-}
-
-.card-eyebrow.blue { color: var(--blue); }
 
 .card-title {
   font-family: var(--font-serif);
-  font-size: 13.5px;
-  line-height: 1.3;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
   color: var(--text-1);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .card-body {
   font-size: 11px;
-  line-height: 1.65;
+  line-height: 1.6;
   color: var(--text-2);
-  margin-bottom: 11px;
+  margin-bottom: 9px;
 }
 
 .card-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 3px;
 }
 
 .chip {
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  padding: 2px 7px;
-  border: 1px solid rgba(26,92,68,0.25);
+  padding: 2px 6px;
+  border: 1px solid rgba(26,92,68,0.22);
   color: var(--green);
-  /* SHARP */
-}
-
-.chip.blue {
-  border-color: rgba(26,63,110,0.25);
-  color: var(--blue);
 }
 
 /* ── PIN DOT ── */
 .pin-dot {
   width: 10px; height: 10px;
-  background: var(--green);
-  border: 2px solid var(--bg);
+  background: #2d5a1b;
+  border: 2px solid #fff;
   box-shadow: 0 1px 6px rgba(0,0,0,0.25);
   /* SHARP — no border-radius */
+}
+
+/* ── MAP ATTRIBUTION ── */
+.leaflet-control-attribution {
+  font-family: var(--font-mono) !important;
+  font-size: 8px !important;
+  background: rgba(255,255,255,0.75) !important;
+  color: #555 !important;
+  padding: 2px 6px !important;
+  letter-spacing: 0.03em;
+}
+
+.leaflet-control-attribution a {
+  color: #2d5a1b !important;
 }
