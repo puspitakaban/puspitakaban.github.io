@@ -126,16 +126,12 @@ body {
 
 .profile-name {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 36px;
   font-weight: 600;
   line-height: 1.1;
   margin-bottom: 3px;
 }
 
-.profile-name em {
-  font-style: italic;
-  color: var(--green);
-}
 
 .profile-role {
   font-size: 10px;
@@ -174,7 +170,7 @@ body {
   gap: 5px;
 }
 
-.tag {
+.sidebar-tag {
   font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -361,20 +357,20 @@ body {
   margin-bottom: 6px;
 }
 
-.card-body {
+.card-description {
   font-size: 11px;
   line-height: 1.6;
   color: var(--text-2);
   margin-bottom: 9px;
 }
 
-.card-chips {
+.card-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 3px;
 }
 
-.chip {
+.tag {
   font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.07em;

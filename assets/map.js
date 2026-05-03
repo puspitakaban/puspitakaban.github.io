@@ -38,7 +38,7 @@
   document.body.appendChild(tooltip);
 
   // ── CONSTANTS ─────────────────────────────────────────────────────────────
-  const CARD_W   = 185;
+  const CARD_W   = 200;
   const PIN_DIST = 55;
   const MARGIN   = 8;
 
@@ -131,17 +131,16 @@
         card.className = 'card';
         card.style.cssText = `width:${CARD_W}px; left:-9999px; top:0px;`;
 
-        const hasLink = proj.link || proj.page;
+        const hasLink = !!proj.link;
         if (hasLink) card.classList.add('card--clickable');
 
         card.innerHTML = `
           <div class="card-loc">${group.label} · ${proj.year}</div>
           <div class="card-title">${proj.title}</div>
-          <div class="card-body">${proj.body}</div>
-          <div class="card-chips">${proj.chips.map(ch => `<span class="chip">${ch}</span>`).join('')}</div>`;
+          <div class="card-description">${proj.description}</div>
+          <div class="card-tags">${proj.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`;
 
-        if (proj.link)      card.addEventListener('click', () => window.open(proj.link, '_blank'));
-        else if (proj.page) card.addEventListener('click', () => window.open('projects/' + proj.page, '_blank'));
+        if (proj.link) card.addEventListener('click', () => window.open(proj.link, '_blank'));
 
         const tipText = hasLink ? 'Click to see project' : 'No link yet';
         card.addEventListener('mouseenter', ()  => { tooltip.textContent = tipText; tooltip.style.display = 'block'; });
