@@ -19,6 +19,11 @@ const LOCATIONS = {
     label: 'Jakarta, Indonesia',
     lat:   -6.2088,
     lng:   106.8456
+  },
+  'west-java': {
+    label: 'Jawa Barat, Indonesia',
+    lat:   -6.9175,
+    lng:   107.6191
   }
 };
 
@@ -38,7 +43,7 @@ const PROJECTS = [
   {
     id:          'gis-coursework-gallery',
     location:    'ann-arbor',
-    year:        '2025–26',
+    year:        '2025',
     title:       `GIS Coursework — Cartography & Spatial Analysis`,
     description: `A gallery of maps created for graduate GIS coursework at the University of Michigan, covering projections, land-cover change, environmental risk, terrain analysis, routing, and remote sensing.`,
     tags:        ['ArcGIS Pro', 'Cartography', 'Spatial Analysis', 'Remote Sensing'],
@@ -73,7 +78,7 @@ const PROJECTS = [
   },
   {
     id:          'nightlight-sae',
-    location:    'jakarta',
+    location:    'west-java',
     year:        '2022',
     title:       `Night Light Data as Auxiliary Variable in Small Area Estimation`,
     description: `Leveraged VIIRS nighttime light satellite imagery as an auxiliary covariate in Fay-Herriot small area estimation models, improving sub-district poverty estimates where survey sample sizes are insufficient. Published in Communications in Statistics.`,
