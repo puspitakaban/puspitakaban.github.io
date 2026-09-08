@@ -20,6 +20,15 @@ const LOCATIONS = {
 // ── PROJECTS ──────────────────────────────────────────────────────────────────
 const PROJECTS = [
   {
+    id:          'gis-coursework-gallery',
+    location:    'ann-arbor',
+    year:        '2025–26',
+    title:       `GIS Coursework — Cartography & Spatial Analysis`,
+    description: `A gallery of maps created for graduate GIS coursework at the University of Michigan, covering projections, land-cover change, environmental risk, terrain analysis, routing, and remote sensing.`,
+    tags:        ['ArcGIS Pro', 'Cartography', 'Spatial Analysis', 'Remote Sensing'],
+    link:        'projects/eas531/'
+  },
+  {
     id:          'north-jakarta-ej',
     location:    'jakarta',
     year:        '2026',
