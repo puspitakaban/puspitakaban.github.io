@@ -18,10 +18,12 @@
   --font-serif: 'Crimson Pro', serif;
   --font-sans:  'Source Sans 3', sans-serif;
   --font-mono:  'DM Mono', monospace;
+  --text-bump:  2pt;
 }
 
 body {
   font-family: var(--font-sans);
+  font-size: calc(16px + var(--text-bump));
   background: var(--bg);
   color: var(--text-1);
   height: 100vh;
@@ -46,7 +48,7 @@ body {
 
 .nav-brand {
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-size: calc(16px + var(--text-bump));
   color: var(--text-1);
   letter-spacing: 0.01em;
 }
@@ -60,7 +62,7 @@ body {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 11px;
+  font-size: calc(11px + var(--text-bump));
   font-weight: 700;
   letter-spacing: 0.10em;
   text-transform: uppercase;
@@ -116,7 +118,7 @@ body {
   background: var(--text-1);
   color: var(--bg);
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: calc(17px + var(--text-bump));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +128,7 @@ body {
 
 .profile-name {
   font-family: var(--font-serif);
-  font-size: 38px;
+  font-size: calc(38px + var(--text-bump));
   font-weight: 600;
   line-height: 1.1;
   margin-bottom: 3px;
@@ -134,7 +136,7 @@ body {
 
 
 .profile-role {
-  font-size: 14px;
+  font-size: calc(14px + var(--text-bump));
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -143,7 +145,7 @@ body {
 }
 
 .profile-bio {
-  font-size: 12px;
+  font-size: calc(12px + var(--text-bump));
   line-height: 1.65;
   color: var(--text-2);
 }
@@ -155,7 +157,7 @@ body {
 }
 
 .sidebar-section-label {
-  font-size: 9.5px;
+  font-size: calc(9.5px + var(--text-bump));
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -171,7 +173,7 @@ body {
 }
 
 .sidebar-tag {
-  font-size: 9.5px;
+  font-size: calc(9.5px + var(--text-bump));
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -194,7 +196,7 @@ body {
   align-items: center;
   gap: 10px;
   padding: 9px 10px;
-  font-size: 12px;
+  font-size: calc(12px + var(--text-bump));
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--text-1);
@@ -225,7 +227,7 @@ body {
   display: block;
   padding: 11px 0;
   text-align: center;
-  font-size: 11px;
+  font-size: calc(11px + var(--text-bump));
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -318,7 +320,7 @@ body {
   z-index: 9999;
   pointer-events: none;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: calc(9.5px + var(--text-bump));
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -330,7 +332,7 @@ body {
 
 .card-loc {
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: calc(8.5px + var(--text-bump));
   font-weight: 500;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -350,7 +352,7 @@ body {
 
 .card-title {
   font-family: var(--font-serif);
-  font-size: 14px;
+  font-size: calc(14px + var(--text-bump));
   font-weight: 600;
   line-height: 1.25;
   color: var(--text-1);
@@ -358,7 +360,7 @@ body {
 }
 
 .card-description {
-  font-size: 11px;
+  font-size: calc(11px + var(--text-bump));
   line-height: 1.6;
   color: var(--text-2);
   margin-bottom: 9px;
@@ -371,7 +373,7 @@ body {
 }
 
 .tag {
-  font-size: 8.5px;
+  font-size: calc(8.5px + var(--text-bump));
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -392,7 +394,7 @@ body {
 /* ── MAP ATTRIBUTION ── */
 .leaflet-control-attribution {
   font-family: var(--font-mono) !important;
-  font-size: 8px !important;
+  font-size: calc(8px + var(--text-bump)) !important;
   background: rgba(255,255,255,0.75) !important;
   color: #555 !important;
   padding: 2px 6px !important;
