@@ -20,6 +20,39 @@ body {
   font-family: var(--sans);
 }
 
+.home-link {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  box-shadow: 2px 2px 0 rgba(17, 21, 16, .08);
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.home-link svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.home-link:hover,
+.home-link:focus-visible {
+  background: #fff;
+  border-color: var(--green);
+  color: var(--green);
+}
+
 .gallery-header {
   min-height: 355px;
   padding: 32px clamp(24px, 6vw, 92px) 55px;
@@ -85,9 +118,9 @@ h1 {
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  padding: 1px 0;
-  background: var(--line);
+  gap: 0;
+  padding: 0;
+  background: var(--paper);
 }
 
 .map-tile {
@@ -96,7 +129,6 @@ h1 {
   background: var(--paper);
   color: var(--ink);
   text-decoration: none;
-  transition: background .2s ease;
 }
 
 .map-preview {
@@ -133,9 +165,8 @@ h1 {
   transition: transform .35s ease;
 }
 
-.map-tile:hover { background: #ecece4; }
-.map-tile:hover .map-preview::after { opacity: 1; transform: none; }
-.map-tile:hover img { transform: scale(1.025); }
+.map-preview:hover::after { opacity: 1; transform: none; }
+.map-preview:hover img { transform: scale(1.025); }
 
 .map-meta {
   display: flex;
