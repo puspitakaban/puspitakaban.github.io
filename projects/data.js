@@ -10,6 +10,11 @@ const LOCATIONS = {
     lat:    42.2808,
     lng:   -83.7430
   },
+  'detroit': {
+    label: 'Detroit, MI',
+    lat:    42.3314,
+    lng:   -83.0458
+  },
   'jakarta': {
     label: 'Jakarta, Indonesia',
     lat:   -6.2088,
@@ -19,6 +24,17 @@ const LOCATIONS = {
 
 // ── PROJECTS ──────────────────────────────────────────────────────────────────
 const PROJECTS = [
+  {
+    id:           'detroit-residential-race',
+    location:     'detroit',
+    year:         '2025',
+    title:        `Residential Clustering Patterns by Race/Ethnicity in Detroit`,
+    description:  `Analyzed 2023 American Community Survey data at the census-tract level to map Detroit's racial and ethnic residential patterns and quantify spatial clustering using Global Moran's I.`,
+    tags:         ['R · sf', 'ACS', 'Spatial Autocorrelation', 'Demographic Analysis'],
+    cardAngle:    0,
+    cardDistance: 310,
+    link:         'https://puspitakaban.github.io/old-portfolio/posts/10272025_detroit_residential_race.html'
+  },
   {
     id:          'gis-coursework-gallery',
     location:    'ann-arbor',

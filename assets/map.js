@@ -71,7 +71,7 @@
     return groups;
   }
 
-  function placeCards(pinX, pinY, cardHeights) {
+  function placeCards(pinX, pinY, cardHeights, projects) {
     const n          = cardHeights.length;
     const startAngle = n === 1 ? 315 : 300;
     const spread     = n === 1 ? 0   : (n === 2 ? 90 : 300);
@@ -80,8 +80,12 @@
     const mh         = mapArea.offsetHeight;
 
     return cardHeights.map((cardH, i) => {
-      const rad  = ((startAngle + i * step) * Math.PI) / 180;
-      const dist = PIN_DIST + Math.max(CARD_W, cardH) * 0.55;
+      const project = projects[i];
+      const angle   = Number.isFinite(project.cardAngle) ? project.cardAngle : startAngle + i * step;
+      const rad     = (angle * Math.PI) / 180;
+      const dist    = Number.isFinite(project.cardDistance)
+        ? project.cardDistance
+        : PIN_DIST + Math.max(CARD_W, cardH) * 0.55;
       const cx   = Math.max(MARGIN, Math.min(pinX + Math.cos(rad) * dist - CARD_W / 2, mw - CARD_W - MARGIN));
       const cy   = Math.max(MARGIN, Math.min(pinY + Math.sin(rad) * dist - cardH  / 2, mh - cardH  - MARGIN));
       return { cx, cy };
@@ -153,7 +157,7 @@
 
       requestAnimationFrame(() => {
         const heights   = cardEls.map(el => el.offsetHeight);
-        const positions = placeCards(pin.x, pin.y, heights);
+        const positions = placeCards(pin.x, pin.y, heights, group.projects);
 
         cardEls.forEach((card, i) => {
           const { cx, cy } = positions[i];
