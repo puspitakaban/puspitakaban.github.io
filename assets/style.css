@@ -13,8 +13,8 @@
   --green:      #2d5a1b;
   --green-dim:  rgba(45,90,27,0.10);
   --blue:       #1a3f6e;
-  --sidebar-w:  280px;
-  --nav-h:      52px;
+  --sidebar-w:  308px;
+  --nav-h:      57.2px;
   --font-serif: 'Crimson Pro', serif;
   --font-sans:  'Source Sans 3', sans-serif;
   --font-mono:  'DM Mono', monospace;
@@ -39,14 +39,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 26.4px;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
 
 .nav-brand {
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-size: 17.6px;
   color: var(--text-1);
   letter-spacing: 0.01em;
 }
@@ -59,8 +59,8 @@ body {
 .nav-status {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 11px;
+  gap: 7.7px;
+  font-size: 12.1px;
   font-weight: 700;
   letter-spacing: 0.10em;
   text-transform: uppercase;
@@ -68,7 +68,7 @@ body {
 }
 
 .nav-status-dot {
-  width: 7px; height: 7px;
+  width: 7.7px; height: 7.7px;
   background: #2ecc71;
   border-radius: 50%;
   animation: pulse 2.5s infinite;
@@ -101,81 +101,81 @@ body {
 }
 
 /* scrollbar */
-.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar { width: 3.3px; }
 .sidebar::-webkit-scrollbar-track { background: transparent; }
 .sidebar::-webkit-scrollbar-thumb { background: var(--border-dark); }
 
 /* ── PROFILE BLOCK ── */
 .profile-block {
-  padding: 24px 22px 20px;
+  padding: 26.4px 24.2px 22px;
   border-bottom: 1px solid var(--border);
 }
 
 .profile-initials {
-  width: 44px; height: 44px;
+  width: 48.4px; height: 48.4px;
   background: var(--text-1);
   color: var(--bg);
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: 18.7px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
+  margin-bottom: 15.4px;
   /* SHARP — no border-radius */
 }
 
 .profile-name {
   font-family: var(--font-serif);
-  font-size: 38px;
+  font-size: 41.8px;
   font-weight: 600;
   line-height: 1.1;
-  margin-bottom: 3px;
+  margin-bottom: 3.3px;
 }
 
 
 .profile-role {
-  font-size: 14px;
+  font-size: 15.4px;
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 14px;
+  margin-bottom: 15.4px;
 }
 
 .profile-bio {
-  font-size: 12px;
+  font-size: 13.2px;
   line-height: 1.65;
   color: var(--text-2);
 }
 
 /* ── SECTION ── */
 .sidebar-section {
-  padding: 18px 22px;
+  padding: 19.8px 24.2px;
   border-bottom: 1px solid var(--border);
 }
 
 .sidebar-section-label {
-  font-size: 9.5px;
+  font-size: 10.45px;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 12px;
+  margin-bottom: 13.2px;
 }
 
 /* ── TAGS ── */
 .tag-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 5.5px;
 }
 
 .sidebar-tag {
-  font-size: 9.5px;
+  font-size: 10.45px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 3px 9px;
+  padding: 3.3px 9.9px;
   border: 1px solid var(--border-dark);
   color: var(--text-2);
   background: transparent;
@@ -186,15 +186,15 @@ body {
 .link-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 2.2px;
 }
 
 .link-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 10px;
-  font-size: 12px;
+  gap: 11px;
+  padding: 9.9px 11px;
+  font-size: 13.2px;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--text-1);
@@ -214,18 +214,18 @@ body {
 }
 
 .link-icon {
-  width: 16px; height: 16px;
+  width: 17.6px; height: 17.6px;
   opacity: 0.55;
   flex-shrink: 0;
 }
 
 /* ── CTA EMAIL BUTTON ── */
 .cta-email {
-  margin: 18px 22px;
+  margin: 19.8px 24.2px;
   display: block;
-  padding: 11px 0;
+  padding: 12.1px 0;
   text-align: center;
-  font-size: 11px;
+  font-size: 12.1px;
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -259,6 +259,17 @@ body {
   filter: none;
 }
 
+.leaflet-bar a {
+  width: 28.6px;
+  height: 28.6px;
+  line-height: 28.6px;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  font-size: 19.8px !important;
+}
+
 /* ── CONNECTOR SVG ── */
 #connector-svg {
   position: absolute;
@@ -282,15 +293,15 @@ body {
   pointer-events: all;
   background: var(--bg);
   border: 1px solid var(--border-dark);
-  padding: 13px 15px;
-  box-shadow: 2px 2px 0px rgba(0,0,0,0.06);
+  padding: 14.3px 16.5px;
+  box-shadow: 2.2px 2.2px 0 rgba(0,0,0,0.06);
   will-change: left, top;
   animation: cardFadeIn 0.5s ease both;
   user-select: none;
 }
 
 .card:hover {
-  box-shadow: 4px 4px 0px rgba(0,0,0,0.11);
+  box-shadow: 4.4px 4.4px 0 rgba(0,0,0,0.11);
   z-index: 10;
 }
 
@@ -318,84 +329,84 @@ body {
   z-index: 9999;
   pointer-events: none;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 10.45px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--bg);
   background: var(--text-1);
-  padding: 4px 10px;
+  padding: 4.4px 11px;
   white-space: nowrap;
 }
 
 .card-loc {
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 9.35px;
   font-weight: 500;
   letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 6px;
+  margin-bottom: 6.6px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 5.5px;
 }
 
 .card-loc::before {
   content: '';
-  width: 5px; height: 5px;
+  width: 5.5px; height: 5.5px;
   background: var(--green);
   flex-shrink: 0;
 }
 
 .card-title {
   font-family: var(--font-serif);
-  font-size: 14px;
+  font-size: 15.4px;
   font-weight: 600;
   line-height: 1.25;
   color: var(--text-1);
-  margin-bottom: 6px;
+  margin-bottom: 6.6px;
 }
 
 .card-description {
-  font-size: 11px;
+  font-size: 12.1px;
   line-height: 1.6;
   color: var(--text-2);
-  margin-bottom: 9px;
+  margin-bottom: 9.9px;
 }
 
 .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 3px;
+  gap: 3.3px;
 }
 
 .tag {
-  font-size: 8.5px;
+  font-size: 9.35px;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  padding: 2px 6px;
+  padding: 2.2px 6.6px;
   border: 1px solid rgba(26,92,68,0.22);
   color: var(--green);
 }
 
 /* ── PIN DOT ── */
 .pin-dot {
-  width: 10px; height: 10px;
+  width: 11px; height: 11px;
   background: #2d5a1b;
-  border: 2px solid #fff;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.25);
+  border: 2.2px solid #fff;
+  box-shadow: 0 1.1px 6.6px rgba(0,0,0,0.25);
   /* SHARP — no border-radius */
 }
 
 /* ── MAP ATTRIBUTION ── */
 .leaflet-control-attribution {
   font-family: var(--font-mono) !important;
-  font-size: 8px !important;
+  font-size: 8.8px !important;
   background: rgba(255,255,255,0.75) !important;
   color: #555 !important;
-  padding: 2px 6px !important;
+  padding: 2.2px 6.6px !important;
   letter-spacing: 0.03em;
 }
 

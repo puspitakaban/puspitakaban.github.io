@@ -38,9 +38,9 @@
   document.body.appendChild(tooltip);
 
   // ── CONSTANTS ─────────────────────────────────────────────────────────────
-  const CARD_W   = 200;
-  const PIN_DIST = 55;
-  const MARGIN   = 8;
+  const CARD_W   = 220;
+  const PIN_DIST = 60.5;
+  const MARGIN   = 8.8;
 
   // ── STATE ─────────────────────────────────────────────────────────────────
   let floatRAF    = null;
@@ -105,7 +105,7 @@
     l.setAttribute('x1', x1); l.setAttribute('y1', y1);
     l.setAttribute('x2', x2); l.setAttribute('y2', y2);
     l.setAttribute('stroke', '#ffffff');
-    l.setAttribute('stroke-width', '0.85');
+    l.setAttribute('stroke-width', '0.935');
     l.setAttribute('opacity', '0.85');
     return l;
   }
@@ -126,7 +126,7 @@
       const pin = map.latLngToContainerPoint([group.lat, group.lng]);
 
       L.marker([group.lat, group.lng], {
-        icon: L.divIcon({ className: '', html: '<div class="pin-dot"></div>', iconSize: [10,10], iconAnchor: [5,5] }),
+        icon: L.divIcon({ className: '', html: '<div class="pin-dot"></div>', iconSize: [11,11], iconAnchor: [5.5,5.5] }),
         interactive: false
       }).addTo(pinLayer);
 
@@ -148,7 +148,7 @@
 
         const tipText = hasLink ? 'Click to see project' : 'No link yet';
         card.addEventListener('mouseenter', ()  => { tooltip.textContent = tipText; tooltip.style.display = 'block'; });
-        card.addEventListener('mousemove',  e   => { tooltip.style.left = (e.clientX + 14) + 'px'; tooltip.style.top = (e.clientY - 32) + 'px'; });
+        card.addEventListener('mousemove',  e   => { tooltip.style.left = (e.clientX + 15.4) + 'px'; tooltip.style.top = (e.clientY - 35.2) + 'px'; });
         card.addEventListener('mouseleave', ()  => { tooltip.style.display = 'none'; });
 
         cardsEl.appendChild(card);
@@ -184,8 +184,8 @@
               phaseY: Math.random() * Math.PI * 2,
               speedX: 0.00045 + Math.random() * 0.00025,
               speedY: 0.00035 + Math.random() * 0.00020,
-              ampX:   5 + Math.random() * 4,
-              ampY:   6 + Math.random() * 5
+              ampX:   5.5 + Math.random() * 4.4,
+              ampY:   6.6 + Math.random() * 5.5
             }
           });
         });

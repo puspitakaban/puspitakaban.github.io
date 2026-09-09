@@ -37,7 +37,7 @@ const PROJECTS = [
     description:  `Analyzed 2023 American Community Survey data at the census-tract level to map Detroit's racial and ethnic residential patterns and quantify spatial clustering using Global Moran's I.`,
     tags:         ['R · sf', 'ACS', 'Spatial Autocorrelation', 'Demographic Analysis'],
     cardAngle:    0,
-    cardDistance: 310,
+    cardDistance: 341,
     link:         'https://puspitakaban.github.io/old-portfolio/posts/10272025_detroit_residential_race.html'
   },
   {
