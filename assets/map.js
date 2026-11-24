@@ -38,7 +38,7 @@
   document.body.appendChild(tooltip);
 
   // ── CONSTANTS ─────────────────────────────────────────────────────────────
-  const CARD_W   = 220;
+  const CARD_W   = 190;
   const PIN_DIST = 60.5;
   const MARGIN   = 8.8;
 
@@ -167,6 +167,8 @@
           card.style.top  = cy + 'px';
 
           const side = sideMidpoint(cx, cy, cardH, pin.x, pin.y);
+          // Keep the connector attached as the card grows on hover.
+          card.style.transformOrigin = `${side.rx}px ${side.ry}px`;
           const line = makeLine(side.x, side.y, pin.x, pin.y);
           svgEl.appendChild(line);
 

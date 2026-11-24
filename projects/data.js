@@ -1,5 +1,10 @@
 // ── LOCATIONS ────────────────────────────────────────────────────────────────
 const LOCATIONS = {
+  'eastern-drc': {
+    label: 'DR Congo',
+    lat:    0.5,
+    lng:   28.5
+  },
   'southeast-asia': {
     label: 'Southeast Asia',
     lat:    4.5,
@@ -29,6 +34,15 @@ const LOCATIONS = {
 
 // ── PROJECTS ──────────────────────────────────────────────────────────────────
 const PROJECTS = [
+  {
+    id:          'ebola-response-contextual-map',
+    location:    'eastern-drc',
+    year:        '2026',
+    title:       `Ebola Response Contextual Web Map`,
+    description: `Migrated and adapted a static Ebola response map into a dynamic web map during my Prosper Global / Mercy Corps internship, enabling interactive exploration of case trends, program locations, and regional context.`,
+    tags:        ['Leaflet', 'JavaScript', 'Humanitarian Mapping', 'Public Health'],
+    link:        'https://ebolamap.prosperglobal.org/'
+  },
   {
     id:           'detroit-residential-race',
     location:     'detroit',

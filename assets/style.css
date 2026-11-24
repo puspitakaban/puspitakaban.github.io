@@ -293,14 +293,16 @@ body {
   pointer-events: all;
   background: var(--bg);
   border: 1px solid var(--border-dark);
-  padding: 14.3px 16.5px;
+  padding: 10px 12px;
   box-shadow: 2.2px 2.2px 0 rgba(0,0,0,0.06);
   will-change: left, top;
+  transition: transform 180ms ease, box-shadow 180ms ease;
   animation: cardFadeIn 0.5s ease both;
   user-select: none;
 }
 
 .card:hover {
+  transform: scale(1.18);
   box-shadow: 4.4px 4.4px 0 rgba(0,0,0,0.11);
   z-index: 10;
 }
@@ -341,12 +343,12 @@ body {
 
 .card-loc {
   font-family: var(--font-mono);
-  font-size: 9.35px;
+  font-size: 8.5px;
   font-weight: 500;
   letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 6.6px;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
   gap: 5.5px;
@@ -361,32 +363,32 @@ body {
 
 .card-title {
   font-family: var(--font-serif);
-  font-size: 15.4px;
+  font-size: 14px;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--text-1);
-  margin-bottom: 6.6px;
+  margin-bottom: 5px;
 }
 
 .card-description {
-  font-size: 12.1px;
-  line-height: 1.6;
+  font-size: 11px;
+  line-height: 1.45;
   color: var(--text-2);
-  margin-bottom: 9.9px;
+  margin-bottom: 7px;
 }
 
 .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 3.3px;
+  gap: 3px;
 }
 
 .tag {
-  font-size: 9.35px;
+  font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  padding: 2.2px 6.6px;
+  padding: 2px 5px;
   border: 1px solid rgba(26,92,68,0.22);
   color: var(--green);
 }
