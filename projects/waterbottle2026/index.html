@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#e9ebed" />
+    <meta name="description" content="Puspita’s water bottle, in three dimensions. Drag to turn it around and discover its stickers." />
+    <title>Water Bottle</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="importmap">
+      {"imports":{"three":"./vendor/three.module.min.js"}}
+    </script>
+  </head>
+  <body>
+    <main id="bottle-viewer" aria-label="Interactive 3D water bottle">
+      <canvas id="bottle-canvas" tabindex="0" aria-label="Rotatable 3D water bottle. Drag to rotate; scroll or pinch to zoom. Use arrow keys to rotate, plus and minus to zoom, and Home to reset." aria-describedby="viewer-help"></canvas>
+      <p id="viewer-help" class="visually-hidden">Drag to turn the bottle. Scroll or pinch to zoom. Arrow keys rotate; plus and minus zoom; Home resets the view. Space pauses or resumes the gentle rotation.</p>
+      <p id="viewer-status" class="visually-hidden" role="status" aria-live="polite"></p>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

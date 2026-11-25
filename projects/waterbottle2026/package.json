@@ -1,0 +1,12 @@
+{
+  "name": "water-bottle-2026",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A rotatable, photo-textured 3D model of Puspita’s water bottle.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs"
+  }
+}
