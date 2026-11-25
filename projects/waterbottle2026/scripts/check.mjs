@@ -5,7 +5,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-for (const file of ['app.js', 'bottle.js', 'cap.js', 'handle.js', 'dimensions.js', 'sticker-data.js', 'scripts/serve.mjs', 'scripts/build.mjs']) {
+for (const file of ['app.js', 'story.js', 'bottle.js', 'cap.js', 'handle.js', 'dimensions.js', 'sticker-data.js', 'scripts/serve.mjs', 'scripts/build.mjs']) {
   const result = spawnSync(process.execPath, ['--check', resolve(root, file)], { encoding: 'utf8' });
   assert.equal(result.status, 0, result.stderr);
 }

@@ -1,7 +1,15 @@
 # Water Bottle
 
-A single-page, responsive 3D viewer of Puspita’s black water bottle. The page
-contains only the bottle, with a soft light-gray studio background and shadow.
+A single-page story and responsive 3D viewer of Puspita’s black water bottle,
+with a soft light-gray background and shadow. The story sits to the left of the
+bottle on larger screens. Smaller screens show the title, bottle, then story.
+Tangerine (title) and Noto Sans (body) load through the Google Fonts service.
+The text is authored directly in `index.html`. `story.js` adds a letter-by-letter
+fade to the title at a gentler pace, then the paragraphs at about 250 words per
+minute including punctuation and paragraph pauses. Reduced-motion preferences show the story
+immediately. The original HTML stays accessible while the visual copy animates.
+The letter elements remain in the document after revealing, keeping line breaks
+and paragraph positions fixed throughout the animation.
 
 Run `npm run dev`, then open http://localhost:4173. No dependency installation
 is needed: Three.js 0.181.2 is included locally under its MIT license.
@@ -12,8 +20,8 @@ including at a GitHub Pages subdirectory; all paths are relative.
 Node.js is only needed for development commands. GitHub Pages can serve this
 folder directly without a build or a Node.js server in production.
 
-Drag or swipe to rotate, and scroll or pinch to zoom. Arrow keys rotate, +/−
-zoom, Home resets, and Space toggles rotation. Gentle automatic rotation stops
+Drag or swipe to rotate. Zoom is disabled, so scrolling can move the page.
+Arrow keys rotate, Home resets, and Space toggles rotation. Gentle automatic rotation stops
 on interaction and respects reduced motion. If 3D is unavailable, the page
 shows a brief message explaining how to try again.
 

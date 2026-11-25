@@ -40,7 +40,8 @@ async function start() {
   controls.dampingFactor = 0.075;
   controls.enablePan = false;
   controls.rotateSpeed = 0.65;
-  controls.zoomSpeed = 0.75;
+  controls.enableZoom = false;
+  canvas.style.touchAction = 'pan-y';
   controls.minPolarAngle = 0.12;
   controls.maxPolarAngle = Math.PI - 0.12;
   controls.autoRotate = !reducedMotion.matches;
@@ -139,8 +140,6 @@ async function start() {
     fitDistance = Math.max(verticalDistance, horizontalDistance);
     if (reset || !oldFit) camera.position.copy(center).add(new THREE.Vector3(0, fitDistance * 0.055, fitDistance));
     else camera.position.sub(center).multiplyScalar(fitDistance / oldFit).add(center);
-    controls.minDistance = fitDistance * 0.48;
-    controls.maxDistance = fitDistance * 1.8;
     renderer.setSize(width, height, false);
     controls.update();
   }
@@ -149,7 +148,7 @@ async function start() {
   resize.observe(viewer);
 
   canvas.addEventListener('keydown', (event) => {
-    const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', '+', '=', '-', '_', 'Home', ' '];
+    const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', ' '];
     if (!keys.includes(event.key)) return;
     event.preventDefault();
     hasInteracted = true;
@@ -166,9 +165,6 @@ async function start() {
       if (event.key === 'ArrowRight') spherical.theta += 0.14;
       if (event.key === 'ArrowUp') spherical.phi -= 0.1;
       if (event.key === 'ArrowDown') spherical.phi += 0.1;
-      if (event.key === '+' || event.key === '=') spherical.radius *= 0.9;
-      if (event.key === '-' || event.key === '_') spherical.radius *= 1.1;
-      spherical.radius = THREE.MathUtils.clamp(spherical.radius, controls.minDistance, controls.maxDistance);
       spherical.phi = THREE.MathUtils.clamp(spherical.phi, controls.minPolarAngle, controls.maxPolarAngle);
       camera.position.setFromSpherical(spherical).add(controls.target);
     }
