@@ -1,7 +1,0 @@
-node_modules/
-dist/
-.DS_Store
-.sites-runtime/
-.sites-checkout/
-__pycache__/
-*.pyc
